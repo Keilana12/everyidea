@@ -22,17 +22,11 @@
 							You are logged in as: {{ user.email() }}<br>
 {% endif %}
 							<br/>
- 							<form action="{{ url|safe }}">
- 								<input type="hidden" name="continue" value="{{ self_url }}">
 {% if user %}
-        						<input type="hidden" name="action" value="logout">
-        						<input type="submit" value="Logout">
+							<input type="button" onclick="location.href='{{ url|safe }}';" value="Logout" />
 {% else %}
-        						<input type="submit" value="Login">
+							<input type="button" onclick="location.href='{{ url|safe }}';" value="Login" />
 {% endif %}							
-      						</form>
-							<p>
-                            </p>
 							<footer>
 							</footer>
 						</article>
