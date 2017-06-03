@@ -34,7 +34,7 @@ def guestbook_key(guestbook_name=DEFAULT_GUESTBOOK_NAME):
 class User(ndb.Model):
     """Sub model for representing a user."""
     email = ndb.StringProperty(indexed=True)
-    receiveEmails = ndb.BooleanProperty()
+    receiveEmail = ndb.BooleanProperty(default=True)
 
 class Page(webapp2.RequestHandler):
     def templateValues(self):
@@ -58,17 +58,26 @@ class Home(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/index.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
-class Profile(Page):
+class Profile(Page):        
     def get(self):
+        receiveEmail = self.request.get('receiveEmail')
         user = users.get_current_user();
         templateValues = self.templateValues()
         if user:
             siteUser = User.get_or_insert(user.email())
-            if siteUser.receiveEmails:
+            if receiveEmail == 'Enable' or receiveEmail == 'Disable':
+                if receiveEmail == 'Enable':
+                    siteUser.receiveEmail = True
+                elif receiveEmail == 'Disable':
+                    siteUser.receiveEmail = False
+                siteUser.put()
+                self.redirect("/profile")
+                return
+            elif siteUser.receiveEmail:
                 opt_value = "Disable"
             else:
                 opt_value = "Enable"
-            templateValues["receiveEmails"] = siteUser.receiveEmails
+            templateValues["receiveEmail"] = siteUser.receiveEmail
             templateValues["opt_value"] = opt_value
             
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))

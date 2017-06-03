@@ -22,7 +22,7 @@
 							You are logged in as: {{ user.email() }}<br>
 							You are currently set to receive email: {{ receiveEmail }}
 {% endif %}
-							<br/>
+							<br/><br/>
 {% if user %}
 							<input type="button" onclick="location.href='/profile?receiveEmail={{ opt_value }}';" value="{{ opt_value }} Emails" />
 							<input type="button" onclick="location.href='{{ url|safe }}';" value="Logout" />
