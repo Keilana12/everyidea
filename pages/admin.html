@@ -1,0 +1,34 @@
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<header>
+						<h1>Admin</h1>
+					</header>
+				</div>
+			</section>
+
+			<section id="main" class="wrapper align-center">
+				<div class="inner">
+					<div class="flex" style="text-align:left">
+						<article>
+							Email List:<br>
+{% for user in all_users %}
+	{% if user.receiveEmail == True %}
+							{{ user.email }},
+	{% endif %}
+{% endfor %}
+<br/><br/>
+							All Users:<br/>
+							<table>
+								<tr><td>Email</td><td>Enabled</td><td>Login Count</td></tr>
+{% for user in all_users %}
+								<tr><td>{{ user.email }}</td><td>{{ user.receiveEmail }}</td><td>{{ user.loginCount }}</td></tr>
+{% endfor %}
+							</table>
+
+							<footer>
+							</footer>
+						</article>
+					</div>
+				</div>
+			</section>

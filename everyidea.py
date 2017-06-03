@@ -35,6 +35,7 @@ class User(ndb.Model):
     """Sub model for representing a user."""
     email = ndb.StringProperty(indexed=True)
     receiveEmail = ndb.BooleanProperty(default=True)
+    loginCount = ndb.IntegerProperty(default=0)
 
 class Page(webapp2.RequestHandler):
     def templateValues(self):
@@ -57,14 +58,31 @@ class Home(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/index.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+        
+class Admin(Page):
+    def get(self):
+        if not users.get_current_user() or not users.is_current_user_admin():
+            self.redirect("/")
+            return
+        templateValues = self.templateValues()
+        query = User.query()
+        all_users = query.fetch()
+        templateValues["all_users"] = all_users
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/admin.html').render(templateValues))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+
 
 class Profile(Page):        
     def get(self):
         receiveEmail = self.request.get('receiveEmail')
-        user = users.get_current_user();
+        user = users.get_current_user()
         templateValues = self.templateValues()
         if user:
             siteUser = User.get_or_insert(user.email())
+            siteUser.email = user.email()
+            siteUser.loginCount = siteUser.loginCount + 1
+            siteUser.put()
             if receiveEmail == 'Enable' or receiveEmail == 'Disable':
                 if receiveEmail == 'Enable':
                     siteUser.receiveEmail = True
@@ -114,58 +132,6 @@ class Fundraising(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/fundraising.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
-
-class Guestbook(webapp2.RequestHandler):
-
-    def get(self):
-        guestbook_name = self.request.get('guestbook_name',
-                                          DEFAULT_GUESTBOOK_NAME)
-        greetings_query = Greeting.query(
-            ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
-        greetings = greetings_query.fetch(10)
-
-        user = users.get_current_user()
-        if user:
-            url = users.create_logout_url(self.request.uri)
-            url_linktext = 'Logout'
-        else:
-            url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login'
-
-        template_values = {
-            'user': user,
-            'greetings': greetings,
-            'guestbook_name': urllib.quote_plus(guestbook_name),
-            'url': url,
-            'url_linktext': url_linktext,
-        }
-
-        template = JINJA_ENVIRONMENT.get_template('guestbook.html')
-        self.response.write(template.render(template_values))
-
-class SignGuestbook(webapp2.RequestHandler):
-
-    def post(self):
-        # We set the same parent key on the 'Greeting' to ensure each
-        # Greeting is in the same entity group. Queries across the
-        # single entity group will be consistent. However, the write
-        # rate to a single entity group should be limited to
-        # ~1/second.
-        guestbook_name = self.request.get('guestbook_name',
-                                          DEFAULT_GUESTBOOK_NAME)
-        greeting = Greeting(parent=guestbook_key(guestbook_name))
-
-        if users.get_current_user():
-            greeting.author = Author(
-                    identity=users.get_current_user().user_id(),
-                    email=users.get_current_user().email())
-
-        greeting.content = self.request.get('content')
-        greeting.put()
-
-        query_params = {'guestbook_name': guestbook_name}
-        self.redirect('/guestbook?' + urllib.urlencode(query_params))
-
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/profile', Profile),
@@ -174,6 +140,5 @@ app = webapp2.WSGIApplication([
     ('/experiments', Experiments),
     ('/brainstorming', Brainstorming),
     ('/fundraising', Fundraising),
-    ('/guestbook', Guestbook),
-    ('/sign', SignGuestbook),
+    ('/admin', Admin),
 ], debug=True)
