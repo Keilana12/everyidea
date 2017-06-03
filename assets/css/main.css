@@ -2917,7 +2917,7 @@
 /* Banner */
 
 	#banner {
-		padding: 8em 0 9em 0;
+		padding: 2em 0 2.5em 0;
 		background-image: url(../../images/banner2.jpg);
 		background-size: cover;
 		background-position: bottom;
@@ -2941,7 +2941,7 @@
 			border-top: 2px solid rgba(255, 255, 255, 0.2);
 			position: relative;
 			z-index: 10005;
-			padding-top: 8em;
+			padding-top: .5em;
 		}
 
 		#banner h1 {
@@ -2949,7 +2949,7 @@
 			font-weight: 400;
 			color: #fff;
 			line-height: 1em;
-			margin: 0 0 1em 0;
+			margin: 0 0 0 0;
 			padding: 0;
 		}
 
@@ -2968,7 +2968,6 @@
 		#banner p {
 			font-size: 1em;
 			color: rgba(255, 255, 255, 0.55);
-			margin-bottom: 1.75em;
 		}
 
 		#banner .flex {
@@ -2978,12 +2977,10 @@
 			-ms-justify-content: center;
 			justify-content: center;
 			text-align: center;
-			margin: 0 auto 4em auto;
 		}
 
 			#banner .flex div {
 				border-right: 2px solid rgba(255, 255, 255, 0.2);
-				padding: 0 8em;
 			}
 
 				#banner .flex div:last-child {
@@ -3007,22 +3004,14 @@
 
 		}
 
-		@media screen and (max-width: 1680px) {
-
-			#banner .flex div {
-				padding: 0 6em;
-			}
-
-		}
-
 		@media screen and (max-width: 1280px) {
 
 			#banner {
-				padding: 7em 0 6em 0;
+				padding: 7em 0 2em 0;
 			}
 
 				#banner .inner {
-					padding-top: 6em;
+					padding-top: .5em;
 				}
 
 				#banner h1 {
@@ -3033,21 +3022,17 @@
 					font-size: 1.25em;
 				}
 
-				#banner .flex div {
-					padding: 0 3em;
-				}
-
 		}
 
 		@media screen and (max-width: 980px) {
 
 			#banner {
 				background-attachment: scroll;
-				padding: 5em 0 4em 0;
+				padding: 5em 0 2em 0;
 			}
 
 				#banner .inner {
-					padding-top: 4em;
+					padding-top: .5em;
 				}
 
 				#banner h1 {
@@ -3060,7 +3045,6 @@
 
 				#banner .flex div {
 					font-size: .85em;
-					padding: 0 1.5em;
 				}
 
 		}
@@ -3068,11 +3052,11 @@
 		@media screen and (max-width: 736px) {
 
 			#banner {
-				padding: 4em 0 3em 0;
+				padding: 4em 0 1.5em 0;
 			}
 
 				#banner .inner {
-					padding-top: 3em;
+					padding-top: .5em;
 				}
 
 				#banner h1 {
@@ -3088,7 +3072,6 @@
 					-webkit-flex-direction: column;
 					-ms-flex-direction: column;
 					flex-direction: column;
-					margin: 0 auto 2em auto;
 				}
 
 					#banner .flex div {
