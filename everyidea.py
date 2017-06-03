@@ -50,14 +50,15 @@ class Page(webapp2.RequestHandler):
         user = users.get_current_user()
         if user:
             url = users.create_logout_url(self.request.uri)
-            url_linktext = 'Logout'
+            url_linktext = 'Profile'
         else:
             url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login'
+            url_linktext = 'Login / Sign Up'
         return {
             'user': user,
             'url': url,
-            'url_linktext': url_linktext
+            'url_linktext': url_linktext,
+            'self_url': self.request.uri
         }
 
 class Home(Page):
@@ -66,10 +67,10 @@ class Home(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/index.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
-class Login(Page):
+class Profile(Page):
     def get(self):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/login.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/profile.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 class Reading(Page):
@@ -156,7 +157,7 @@ class SignGuestbook(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', Home),
-    ('/login', Login),
+    ('/profile', Profile),
     ('/reading', Reading),
     ('/news', News),
     ('/experiments', Experiments),

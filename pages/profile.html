@@ -1,0 +1,41 @@
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<header>
+						<h1>{{ url_linktext }}</h1>
+					</header>
+				</div>
+			</section>
+
+			<section id="main" class="wrapper align-center">
+				<div class="inner">
+					<div class="flex" style="text-align:left">
+						<article>
+							This website will eventually have more interactive and crowd-sourced content,
+							some of which you will only be able to contribute or comment on if you are logged in.
+							For now, we only use this login information to send out occasional status emails about
+							the website, and even then you can opt-out of receiving these emails.
+							Logging in requires a Google account.  Google just shares your email with us and we never
+							have access to your password or any other information about you.
+							<br><br>
+{% if user %}
+							You are logged in as: {{ user.email() }}<br>
+{% endif %}
+							<br/>
+ 							<form action="{{ url|safe }}">
+ 								<input type="hidden" name="continue" value="{{ self_url }}">
+{% if user %}
+        						<input type="hidden" name="action" value="logout">
+        						<input type="submit" value="Logout">
+{% else %}
+        						<input type="submit" value="Login">
+{% endif %}							
+      						</form>
+							<p>
+                            </p>
+							<footer>
+							</footer>
+						</article>
+					</div>
+				</div>
+			</section>
