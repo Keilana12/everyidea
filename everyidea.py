@@ -41,12 +41,15 @@ class Page(webapp2.RequestHandler):
     def templateValues(self):
         user = users.get_current_user()
         if user:
+            is_admin = users.is_current_user_admin()
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Profile'
         else:
+            is_admin = False
             url = users.create_login_url(self.request.uri)
             url_linktext = 'Login / Sign Up'
         return {
+            'is_admin': is_admin,
             'user': user,
             'url': url,
             'url_linktext': url_linktext,

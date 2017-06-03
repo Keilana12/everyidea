@@ -20,6 +20,9 @@
 						<a href="/brainstorming">Brainstorming</a>
 		<!--				<a href="/fundraising">Fundraising</a> -->
 						<a href="/profile">{{ url_linktext }}</a>
+{% if is_admin %}
+						<a href="/admin">Admin</a>
+{% endif %}
 					</nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
