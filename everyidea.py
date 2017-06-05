@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import urllib
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -9,26 +8,12 @@ from google.appengine.ext import ndb
 import jinja2
 import webapp2
 
+# jinja is a framework for templates
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 # [END imports]
-
-DEFAULT_GUESTBOOK_NAME = 'default_guestbook'
-
-
-# We set a parent key on the 'Greetings' to ensure that they are all
-# in the same entity group. Queries across the single entity group
-# will be consistent. However, the write rate should be limited to
-# ~1/second.
-
-def guestbook_key(guestbook_name=DEFAULT_GUESTBOOK_NAME):
-    """Constructs a Datastore key for a Guestbook entity.
-
-    We use guestbook_name as the key.
-    """
-    return ndb.Key('Guestbook', guestbook_name)
 
 
 class User(ndb.Model):
@@ -39,6 +24,7 @@ class User(ndb.Model):
 
 class Page(webapp2.RequestHandler):
     def templateValues(self):
+        #admin, profile/login, for every page
         user = users.get_current_user()
         if user:
             is_admin = users.is_current_user_admin()
@@ -64,12 +50,12 @@ class Home(Page):
         
 class Admin(Page):
     def get(self):
+        #if not admin go to home page
         if not users.get_current_user() or not users.is_current_user_admin():
             self.redirect("/")
             return
         templateValues = self.templateValues()
-        query = User.query()
-        all_users = query.fetch()
+        all_users = User.query().fetch()
         templateValues["all_users"] = all_users
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/admin.html').render(templateValues))
@@ -78,13 +64,16 @@ class Admin(Page):
 
 class Profile(Page):        
     def get(self):
+        #if user clicks enable/disable emails then variable will either have Enable or Disable
         receiveEmail = self.request.get('receiveEmail')
         user = users.get_current_user()
         templateValues = self.templateValues()
         if user:
             siteUser = User.get_or_insert(user.email())
             siteUser.email = user.email()
+            #todo: fix login count to true login count
             siteUser.loginCount = siteUser.loginCount + 1
+            #put= save  to database
             siteUser.put()
             if receiveEmail == 'Enable' or receiveEmail == 'Disable':
                 if receiveEmail == 'Enable':
