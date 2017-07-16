@@ -16,3 +16,13 @@ Technologies used:
 * HTML
 * CSS
 * Jinja2
+* Eclipse
+* PyDev
+
+
+Setup Instructions:
+
+1. This site has a pretty good step by step guide for setting up the basics:
+   https://cloud.google.com/appengine/docs/standard/python/tools/setting-up-eclipse
+   
+
