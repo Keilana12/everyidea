@@ -27,54 +27,45 @@ page
 
 ## Setup Instructions:
 
-1. This site has a pretty good step by step guide for setting up the basics:
-https://cloud.google.com/appengine/docs/standard/python/tools/setting-up-eclipse
-Notes:
-
-* When it tells you to check python version you can open a terminal to do this.
-* By default it should install appengine in /usr/local/google_appengine, but
-watch the dialogs to confirm this location
-* When installing the pydev plugin, be sure and select the entry when it asks
+1. This [site](https://cloud.google.com/appengine/docs/standard/python/tools/setting-up-eclipse) has a pretty good step by step guide for setting up the basics.
+  * When it tells you to check python version you can open a terminal to do this.
+  * When installing the pydev plugin, be sure and select the entry when it asks
   you if you trust these certificates (by default it is not selected and isn't
-  obvious)  
+  obvious).  
 
-2. Download and install GitHub Desktop: https://desktop.github.com
+1. Download and install [GitHub Desktop](https://desktop.github.com)
    once opened, either sign in or create a free account
    
-3. Clone the everyidea repository to your computer.
-  a. click on 'Clone a Repository'
-  b. use url: ikrocks/everyidea
-  c. change the local path to be in your eclipse workspace.  This should be
+1. Clone the everyidea repository to your computer.
+  1. click on 'Clone a Repository'
+  1. use url: ikrocks/everyidea
+  1. change the local path to be in your eclipse workspace.  This should be
      something like /Users/jsmith/eclipse-workspace/everyidea
 
-4. In Eclipse create the project
-  a. Select File->New->Project...
-  b. Select PyDev->PyDev Google App Engine Project
-  c. Use everyidea as the project name.  It should tell you that the location
+1. In Eclipse create the project
+  1. Select File->New->Project...
+  1. Select PyDev->PyDev Google App Engine Project
+  1. Use everyidea as the project name.  It should tell you that the location
      already contains python files and that the project will include them.
-  d. When it asks for the Google App Engine Directory, type in
+  1. When it asks for the Google App Engine Directory, type in
      /usr/local/google_appengine.  If you hit 'Browse' instead of typing it in
      directly, it is much harder to select this directory.
   
-5. Test the application locally
-  a. Right click on the everyidea project in the package explorer
-  b. Select Run As -> PyDev: Google App Run
-  c. This will bring up the console and may ask you if you want to allow checks
+1. Test the application locally
+  1. Right click on the everyidea project in the package explorer
+  1. Select Run As -> PyDev: Google App Run
+  1. This will bring up the console and may ask you if you want to allow checks
      for update on startup.  Either Y or N is fine.
-  d. Open up http://localhost:8080 in a browser
-  e. If you choose to Login, you can use any email you want.  If you select the
+  1. Open up [http://localhost:8080](http://localhost:8080) in a browser.
+  1. If you choose to Login, you can use any email you want.  If you select the
      checkbox to login as administrator, then you will see an extra Admin page.
   
-6. Test that you can check in changes
-  a. In eclipse, open the TEST.TXT file.
-  b. Make changes to the file.
-  c. In GitHub Desktop, you should see 4 changed files.  Uncheck all but
-     TEST.TXT (the others should be ignored...I'll fix this soon so that they
-     are automatically ignored)
-  d. Add a short summary and click 'Commit to master'.
-  e. In the upper right hand corner click 'Push origin'
-  f. If you get an authentication failed error, this means that your github user
+1. Test that you can check in changes
+  1. In eclipse, open the TEST.TXT file.
+  1. Make changes to the file.
+  1. In GitHub Desktop, you should see 1 changed files.
+  1. Add a short summary and click 'Commit to master'.
+  1. In the upper right hand corner click 'Push origin'
+  1. If you get an authentication failed error, this means that your github user
      has not yet been added to the project.  Contact admin@everyidea.net
      (Isabelle) to get added.
-  
-   
