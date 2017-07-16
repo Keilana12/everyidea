@@ -8,3 +8,11 @@ Technologies used:
 * Google Domains - a domain registrar that redirects everyidea.net to the appropriate place.
 * Google AppEngine - a cloud hosting site that runs the code
 * Google Datastore - the database used to store information like user profiles
+* Python
+* Java
+* Git
+* GitHub
+* GitHub Desktop
+* HTML
+* CSS
+* Jinja2
