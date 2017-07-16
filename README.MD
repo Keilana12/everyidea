@@ -28,10 +28,10 @@ page
 ## Setup Instructions:
 
 1. This [site](https://cloud.google.com/appengine/docs/standard/python/tools/setting-up-eclipse) has a pretty good step by step guide for setting up the basics.
-  * When it tells you to check python version you can open a terminal to do this.
-  * When installing the pydev plugin, be sure and select the entry when it asks
-  you if you trust these certificates (by default it is not selected and isn't
-  obvious).  
+   * When it tells you to check python version you can open a terminal to do this.
+   * When installing the pydev plugin, be sure and select the entry when it asks
+   you if you trust these certificates (by default it is not selected and isn't
+   obvious).  
 
 1. Download and install [GitHub Desktop](https://desktop.github.com)
    once opened, either sign in or create a free account
