@@ -123,6 +123,12 @@ class Fundraising(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/fundraising.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+        
+class Experiment2(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/experiment2.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 app = webapp2.WSGIApplication([
     ('/', Home),
@@ -133,4 +139,5 @@ app = webapp2.WSGIApplication([
     ('/brainstorming', Brainstorming),
     ('/fundraising', Fundraising),
     ('/admin', Admin),
+    ('/experiment2', Experiment2),
 ], debug=True)
