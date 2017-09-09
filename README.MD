@@ -1,6 +1,6 @@
 ## Description
 
-everyidea is a website originally created by Isabelle Rugg to promote education
+everyidea is a website originally created by Isabelle Rugg and others to promote education
 and crowdsourced idea generation related to some of the problems the world faces
 today.  It is a collaborative effort with several contributors.
 
