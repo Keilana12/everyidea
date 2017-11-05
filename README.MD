@@ -31,7 +31,8 @@ page
    * When it tells you to check python version you can open a terminal to do this.
    * When installing the pydev plugin, be sure and select the entry when it asks
    you if you trust these certificates (by default it is not selected and isn't
-   obvious).  
+   obvious).
+   * You may need to install a new version of Java
 
 1. Download and install [GitHub Desktop](https://desktop.github.com)
    once opened, either sign in or create a free account
