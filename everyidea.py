@@ -94,29 +94,6 @@ class Profile(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/profile.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
-class Reading(Page):
-    def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/reading.html').render({}))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-
-class News(Page):
-    def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/news.html').render({}))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-
-class Experiments(Page):
-    def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/experiments.html').render({}))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-
-class Brainstorming(Page):
-    def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/brainstorming.html').render({}))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 class Fundraising(Page):
     def get(self):
@@ -124,35 +101,67 @@ class Fundraising(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/fundraising.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
         
-class Experiment1(Page):
+class WaterShortage(Page):
     def get(self):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/experiment1.html').render({}))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-        
-class Experiment2(Page):
-    def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/experiment2.html').render({}))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-        
-class Information(Page):
-    def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/information.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/home.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
+class WaterShortageNews(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/news.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+
+class WaterShortageExperiments(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/experiments.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+
+class WaterShortageExperiment1(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/experiment1.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+        
+class WaterShortageExperiment2(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/experiment2.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+
+class WaterShortageBrainstorming(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/brainstorming.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+
+class GlobalWarming(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/global_warming/home.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
+
+
+# not used yet
+class Reading(Page):
+    def get(self):
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/reading.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 app = webapp2.WSGIApplication([
     ('/', Home),
-    ('/profile', Profile),
+    ('/global_warming', GlobalWarming),
+    ('/water_shortage', WaterShortage),
     ('/reading', Reading),
-    ('/news', News),
-    ('/experiments', Experiments),
-    ('/brainstorming', Brainstorming),
+    ('/water_shortage/news', WaterShortageNews),
+    ('/water_shortage/experiments', WaterShortageExperiments),
+    ('/water_shortage/experiment1', WaterShortageExperiment1),
+    ('/water_shortage/experiment2', WaterShortageExperiment2),
+    ('/water_shortage/brainstorming', WaterShortageBrainstorming),
+    ('/profile', Profile),
     ('/fundraising', Fundraising),
     ('/admin', Admin),
-    ('/experiment1', Experiment1),
-    ('/experiment2', Experiment2),
-    ('/information', Information),
 ], debug=True)

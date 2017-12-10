@@ -3,7 +3,7 @@
 		<title>Every Idea</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
 	</head>
 	<body>
 
@@ -13,15 +13,16 @@
 					<a href="/" class="logo"><strong>everyidea.net</strong></a>
 					<nav id="nav">
 						<a href="/">Home</a>
-						<a href="/information">Information</a>
-		<!--				<a href="/reading">Reading List</a> -->
-						<a href="/news">News</a> 
-						<a href="/experiments">Experiments</a>
-						 	<a class = "submenu" href="/experiment1">-- Basic Filter</a>
-							<a class = "submenu" href="/experiment2">-- Evaporation</a> 
-						<a href="/brainstorming">Brainstorming</a>
+						<a href="/water_shortage">Water Shortage</a>
+						  <a class="submenu" href="/water_shortage/news">News</a> 
+						  <a class="submenu" href="/water_shortage/experiments">Experiments</a>
+						 	<a class="subsubmenu" href="/water_shortage/experiment1">Basic Filter</a>
+							<a class="subsubmenu" href="/water_shortage/experiment2">Evaporation</a> 
+						  <a class="submenu" href="/water_shortage/brainstorming">Brainstorming</a>
+						<a href="/global_warming">Global Warming</a>
 						<a href="/fundraising">Fundraising</a>
 						<a href="/profile">{{ url_linktext }}</a>
+		<!--				<a href="/reading">Reading List</a> -->
 {% if is_admin %}
 						<a href="/admin">Admin</a>
 {% endif %}

@@ -2873,6 +2873,12 @@
 		
 		#navPanel a:not(.close).submenu {
 			border: none;
+			padding: 0 0 0 0.75em;
+		}
+		
+		#navPanel a:not(.close).subsubmenu {
+			border: none;
+			padding: 0 0 0 1.5em;
 		}
 
 		#navPanel .close {
