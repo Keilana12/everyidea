@@ -2774,7 +2774,7 @@
 					font-size: 1.25em;
 				}
 
-				@media screen and (max-width: 980px) {
+				@media screen and (max-width: 9999px) {
 
 					#header a.navPanelToggle {
 						display: inline-block;
@@ -2816,7 +2816,7 @@
 
 /* Nav */
 
-	@media screen and (max-width: 980px) {
+	@media screen and (max-width: 9999px) {
 
 		#nav {
 			display: none;
@@ -2862,14 +2862,18 @@
 			color: #daefe3;
 			font-weight: 600;
 			display: block;
-			padding: 0.75em 0;
+			# padding: 0.75em 0;
 			text-decoration: none;
 			font-weight: 400;
 		}
 
-			#navPanel a:not(.close):first-child {
-				border: none;
-			}
+		#navPanel a:not(.close):first-child {
+			border: none;
+		}
+		
+		#navPanel a:not(.close).submenu {
+			border: none;
+		}
 
 		#navPanel .close {
 			text-decoration: none;
