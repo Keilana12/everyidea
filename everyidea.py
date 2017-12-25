@@ -15,6 +15,11 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 # [END imports]
 
+class Comment(ndb.Model):
+    """Sub model for representing comments."""
+    author = ndb.StringProperty(indexed=True)
+    page = ndb.StringProperty(indexed=True)
+    text = ndb.StringProperty()
 
 class User(ndb.Model):
     """Sub model for representing a user."""
@@ -60,7 +65,6 @@ class Admin(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/admin.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-
 
 class Profile(Page):        
     def get(self):
@@ -121,8 +125,33 @@ class WaterShortageExperiments(Page):
 
 class WaterShortageExperiment1(Page):
     def get(self):
-        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
+        commentText = self.request.get('commentText')
+        user = users.get_current_user()
+        templateValues = self.templateValues()
+        templateValues["commentPage"] = "/water_shortage/experiment1"
+
+        if user:
+            siteUser = User.get_or_insert(user.email())
+            siteUser.email = user.email()
+            siteUser.put()
+            comment = Comment.get_or_insert("WaterShortageExperiment1_"+ siteUser.email)
+            comment.author = siteUser.email
+            comment.page = "WaterShortageExperiment1" 
+            if commentText:
+                comment.text = commentText
+            if comment.text:
+                comment.put()
+                templateValues["submitText"] = "Update Comment"
+            else:
+                templateValues["submitText"] = "Add Comment"
+            templateValues["comment"] = comment
+
+        query = Comment.query(Comment.page == "WaterShortageExperiment1")
+        templateValues["comments"] = query.fetch()
+
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/experiment1.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/comments.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
         
 class WaterShortageExperiment2(Page):

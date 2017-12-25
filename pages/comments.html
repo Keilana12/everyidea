@@ -1,0 +1,27 @@
+			<section id="comments" class="wrapper align-center">
+				<div class="inner">
+					<div class="flex" style="text-align:left">
+						<article>
+							<hr/>
+							<ul>
+{% for each in comments %}
+								<li>Comment by {{ each.author }}: {{ each.text }}</li>
+{% endfor %}
+							</ul>
+{% if user %}
+							Comment by {{ user.email() }}:
+							<form method="get">
+	{% if comment.text %}
+							<input type=text name="commentText" value="{{ comment.text }}"/>
+	{% else %}
+							<input type=text name="commentText" value=""/>
+	{% endif %}
+							<input type="submit" value="{{ submitText }}" />
+							</form>
+{% else %}
+							Login to leave a comment.
+{% endif %}
+						</article>
+					</div>
+				</div>
+			</section>
