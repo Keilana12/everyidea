@@ -48,6 +48,29 @@ class Page(webapp2.RequestHandler):
             'url_linktext': url_linktext,
             'self_url': self.request.uri
         }
+    def comments(self, templateValues, pageUrl, pageName):
+        templateValues["commentPage"] = pageUrl
+        commentText = self.request.get('commentText')
+        user = users.get_current_user()
+        if user:
+            siteUser = User.get_or_insert(user.email())
+            siteUser.email = user.email()
+            siteUser.put()
+            comment = Comment.get_or_insert(pageName + "_"+ siteUser.email)
+            comment.author = siteUser.email
+            comment.page = pageName 
+            if commentText:
+                comment.text = commentText
+            if comment.text:
+                comment.isApproved = False
+                comment.put()
+                templateValues["submitText"] = "Update Comment"
+            else:
+                templateValues["submitText"] = "Add Comment"
+            templateValues["comment"] = comment
+
+        query = Comment.query(Comment.page == pageName)
+        templateValues["comments"] = query.fetch()
 
 class Home(Page):
     def get(self):
@@ -132,8 +155,11 @@ class WaterShortage(Page):
 
 class WaterShortageNews(Page):
     def get(self):
+        templateValues = self.templateValues()
+        self.comments(templateValues, "/water_shortage/news", "WaterShortageNews")
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/news.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/comments.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 class WaterShortageExperiments(Page):
@@ -144,31 +170,8 @@ class WaterShortageExperiments(Page):
 
 class WaterShortageExperiment1(Page):
     def get(self):
-        commentText = self.request.get('commentText')
-        user = users.get_current_user()
         templateValues = self.templateValues()
-        templateValues["commentPage"] = "/water_shortage/experiment1"
-
-        if user:
-            siteUser = User.get_or_insert(user.email())
-            siteUser.email = user.email()
-            siteUser.put()
-            comment = Comment.get_or_insert("WaterShortageExperiment1_"+ siteUser.email)
-            comment.author = siteUser.email
-            comment.page = "WaterShortageExperiment1" 
-            if commentText:
-                comment.text = commentText
-            if comment.text:
-                comment.isApproved = False
-                comment.put()
-                templateValues["submitText"] = "Update Comment"
-            else:
-                templateValues["submitText"] = "Add Comment"
-            templateValues["comment"] = comment
-
-        query = Comment.query(Comment.page == "WaterShortageExperiment1")
-        templateValues["comments"] = query.fetch()
-
+        self.comments(templateValues, "/water_shortage/experiment1", "WaterShortageExperiment1")
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/experiment1.html').render({}))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/comments.html').render(templateValues))
@@ -176,14 +179,20 @@ class WaterShortageExperiment1(Page):
         
 class WaterShortageExperiment2(Page):
     def get(self):
+        templateValues = self.templateValues()
+        self.comments(templateValues, "/water_shortage/experiment2", "WaterShortageExperiment2")
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/experiment2.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/comments.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 class WaterShortageBrainstorming(Page):
     def get(self):
+        templateValues = self.templateValues()
+        self.comments(templateValues, "/water_shortage/brainstorming", "WaterShortageBrainstorming")
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/water_shortage/brainstorming.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/comments.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 class GlobalWarming(Page):
@@ -196,8 +205,11 @@ class GlobalWarming(Page):
 # not used yet
 class Reading(Page):
     def get(self):
+        templateValues = self.templateValues()
+        self.comments(templateValues, "/reading", "Reading")
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(self.templateValues()))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/reading.html').render({}))
+        self.response.write(JINJA_ENVIRONMENT.get_template('pages/comments.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
 
 app = webapp2.WSGIApplication([
