@@ -49,6 +49,7 @@ class Page(webapp2.RequestHandler):
             'self_url': self.request.uri
         }
     def comments(self, templateValues, pageUrl, pageName):
+        key = ndb.Key('Comment', "All")
         templateValues["commentPage"] = pageUrl
         commentText = self.request.get('commentText')
         user = users.get_current_user()
@@ -56,7 +57,7 @@ class Page(webapp2.RequestHandler):
             siteUser = User.get_or_insert(user.email())
             siteUser.email = user.email()
             siteUser.put()
-            comment = Comment.get_or_insert(pageName + "_"+ siteUser.email)
+            comment = Comment.get_or_insert(pageName + "_"+ siteUser.email, parent=key)
             comment.author = siteUser.email
             comment.page = pageName 
             if commentText:
@@ -69,7 +70,7 @@ class Page(webapp2.RequestHandler):
                 templateValues["submitText"] = "Add Comment"
             templateValues["comment"] = comment
 
-        query = Comment.query(Comment.page == pageName)
+        query = Comment.query(Comment.page == pageName, ancestor=key)
         templateValues["comments"] = query.fetch()
 
 class Home(Page):
