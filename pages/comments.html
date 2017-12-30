@@ -5,7 +5,12 @@
 							<hr/>
 							<ul>
 {% for each in comments %}
+	{% if each.isApproved %}
 								<li>Comment by {{ each.author }}: {{ each.text }}</li>
+	{% elif each.author == user.email() %}
+								<li>Comment by {{ each.author }}: {{ each.text }} (waiting for approval...)</li>
+	
+	{% endif %}
 {% endfor %}
 							</ul>
 {% if user %}

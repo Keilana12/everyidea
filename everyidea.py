@@ -7,6 +7,7 @@ from google.appengine.ext import ndb
 
 import jinja2
 import webapp2
+from __builtin__ import True
 
 # jinja is a framework for templates
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -20,6 +21,7 @@ class Comment(ndb.Model):
     author = ndb.StringProperty(indexed=True)
     page = ndb.StringProperty(indexed=True)
     text = ndb.StringProperty()
+    isApproved = ndb.BooleanProperty(indexed=True, default=False)
 
 class User(ndb.Model):
     """Sub model for representing a user."""
@@ -59,9 +61,26 @@ class Admin(Page):
         if not users.get_current_user() or not users.is_current_user_admin():
             self.redirect("/")
             return
+        action = self.request.get('action')
+        if (action == "approve"):
+            author = self.request.get('author')
+            page = self.request.get('page')
+            query = Comment.query(Comment.page == page and Comment.author == author)
+            for each in query.fetch():
+                each.isApproved = True
+                each.put()
+        if (action == "unapprove"):
+            author = self.request.get('author')
+            page = self.request.get('page')
+            query = Comment.query(Comment.page == page and Comment.author == author)
+            for each in query.fetch():
+                each.isApproved = False
+                each.put()
         templateValues = self.templateValues()
         all_users = User.query().fetch()
         templateValues["all_users"] = all_users
+        all_comments = Comment.query().fetch()
+        templateValues["all_comments"] = all_comments
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/admin.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
@@ -140,6 +159,7 @@ class WaterShortageExperiment1(Page):
             if commentText:
                 comment.text = commentText
             if comment.text:
+                comment.isApproved = False
                 comment.put()
                 templateValues["submitText"] = "Update Comment"
             else:

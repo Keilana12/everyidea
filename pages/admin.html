@@ -25,6 +25,40 @@
 								<tr><td>{{ user.email }}</td><td>{{ user.receiveEmail }}</td><td>{{ user.loginCount }}</td></tr>
 {% endfor %}
 							</table>
+														All Comments:<br/>
+							<table>
+								<tr>
+									<td>Page</td>
+									<td>User</td>
+									<td>Comment</td>
+									<td>Approved</td>
+									<td>Action</td>
+								</tr>
+{% for comment in all_comments %}
+								<tr>
+									<td>{{ comment.page }}</td>
+									<td>{{ comment.author }}</td>
+									<td>{{ comment.text }}</td>
+									<td>{{ comment.isApproved }}</td>
+									<td>
+										<form>
+{% if comment.isApproved %}									
+											<input name="action" hidden="true" value="unapprove"/>
+{% else %}
+											<input name="action" hidden="true" value="approve"/>
+{% endif %}
+											<input name="page" hidden="true" value="{{ comment.page }}"/>
+											<input name="author" hidden="true" value="{{ comment.author }}"/>
+{% if comment.isApproved %}									
+											<input type="submit" value="Unapprove"/>
+{% else %}
+											<input type="submit" value="Approve"/>
+{% endif %}
+										</form>
+									</td>
+								</tr>
+{% endfor %}
+							</table>
 
 							<footer>
 							</footer>
