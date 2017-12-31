@@ -16,7 +16,7 @@
 {% if user %}
 							Comment by {{ user.email() }}:
 							<form method="get">
-	{% if comment.text %}
+	{% if comment %}
 							<textarea rows="3" cols="80" name="commentText" value="{{ comment.text }}"></textarea>
 	{% else %}
 							<textarea rows="3" cols="80" name="commentText" value=""></textarea>

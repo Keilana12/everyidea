@@ -57,18 +57,17 @@ class Page(webapp2.RequestHandler):
             siteUser = User.get_or_insert(user.email())
             siteUser.email = user.email()
             siteUser.put()
-            comment = Comment.get_or_insert(pageName + "_"+ siteUser.email, parent=key)
-            comment.author = siteUser.email
-            comment.page = pageName 
             if commentText:
+                comment = Comment.get_or_insert(pageName + "_"+ siteUser.email, parent=key)
+                comment.author = siteUser.email
+                comment.page = pageName 
                 comment.text = commentText
-            if comment.text:
                 comment.isApproved = False
                 comment.put()
                 templateValues["submitText"] = "Update Comment"
+                templateValues["comment"] = comment
             else:
                 templateValues["submitText"] = "Add Comment"
-            templateValues["comment"] = comment
 
         query = Comment.query(Comment.page == pageName, ancestor=key)
         templateValues["comments"] = query.fetch()
