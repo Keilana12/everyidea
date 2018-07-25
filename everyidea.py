@@ -107,7 +107,7 @@ class Admin(Page):
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/header.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/admin.html').render(templateValues))
         self.response.write(JINJA_ENVIRONMENT.get_template('pages/footer.html').render({}))
-
+#hi
 class Profile(Page):        
     def get(self):
         #if user clicks enable/disable emails then variable will either have Enable or Disable
